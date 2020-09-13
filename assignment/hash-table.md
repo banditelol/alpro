@@ -142,6 +142,11 @@ Elemen yang diperiksa dalam pencarian sukses:
 =& \frac{1}{n} \sum_{i=1}^{n} \left(1+\sum_{j=i+1}^{n}E[X_{ij}]\right) \\
 =& \frac{1}{n} \sum_{i=1}^{n} \left(1+\sum_{j=i+1}^{n}\frac{1}{m}\right) \\
 =& 1 + \frac{1}{nm} \sum_{i=1}^{n} (n-i) \\
+\end{aligned}
+$$`</small></sup></sub>
+
+--
+<sub><sup><small>`$$\begin{aligned}
 =& 1 + \frac{1}{nm} \left( \sum_{i=1}^{n}n - \sum_{i=1}^{n}i \right) \\
 =& 1 + \frac{1}{nm} \left( n^2 - \frac{n(n+1)}{2} \right) \\
 =& 1 + \frac{n-1}{2m} \\
@@ -364,15 +369,14 @@ E[X] &= \sum_{i=1}^{\infty}Pr\{X \geq i\} \\
 
 --
 ### Jumlah Probes Pencarian Berhasil
-<small>bila `$k$` merupakan _key_ ke `$i+1$` yang dimasukkan ke tabel, maka ekspektasi probe yang dilakukan tidak melebihi `$1/(1-i/m) = m/(m-i)$`. Sehingga rata-rata banyaknya probe yang dilakukan adalah:</small>
-
-<small>`$$\begin{aligned}
+<small>bila `$k$` merupakan _key_ ke `$i+1$` yang dimasukkan ke tabel, maka ekspektasi probe yang dilakukan tidak melebihi `$1/(1-i/m) = m/(m-i)$`. Sehingga rata-rata banyaknya probe yang dilakukan adalah:
+<sub><sup>`$$\begin{aligned}
 \frac{1}{n}\sum_{i=0}^{n-1}\frac{m}{m-i} &= \frac{m}{n}\sum_{i=0}^{n-1}\frac{1}{m-i} \\
 &= \frac{1}{\alpha}\sum_{k=m-n+1}^{m}\frac{1}{k} \\
 &\leq \frac{1}{\alpha}\int_{m-n}^{m}(1/x)dx) \\
 &= \frac{1}{\alpha}ln\,\frac{m}{m-n} \\
 &= \frac{1}{\alpha}ln\,\frac{1}{1-\alpha} \\
-\end{aligned}$$`</small>
+\end{aligned}$$`</sup></sub></small>
 
 --
 ### Performa Operasi INSERT
@@ -413,35 +417,37 @@ Karena `$m_j$` bergantung secara kuadratik terhadap `$n_j$`, perlu dibuktikan ba
 Untuk itu mari kita amati ekspektasi jumlah slot _secondary_ `$n_j^2$`
 
 --
-<small>`$$\begin{aligned}
+<sup><sub><small>`$$\begin{aligned}
 E \Bigg[ \sum_{j=0}^{m-1} &n_j^2 \Bigg] \\
 &= E\Bigg[\sum_{j=0}^{m-1} \left(n_j + 2\binom{n_j}{2} \right)\Bigg] \\
 &= E\Bigg[\sum_{j=0}^{m-1} n_j \Bigg] + 2E \Bigg[\sum_{j=0}^{m-1}\binom{n_j}{2}\Bigg] \\
 &= E[n] + 2E \Bigg[\sum_{j=0}^{m-1}\binom{n_j}{2}\Bigg] \\
 &= n + 2E \Bigg[\sum_{j=0}^{m-1}\binom{n_j}{2}\Bigg]
-\end{aligned}$$`</small>
+\end{aligned}$$`</small></sub></sup>
 
 <small>bisa diamati bahwa `$\sum_{j=0}^{m-1}\binom{n_j}{2}$` adalah jumlah pasangan keys yang bertabrakan. Berdasarkan sifat universal hashing, ekpektasi nilai ini tidak lebih dari:</small>
 
 --
-<small>`$$\begin{aligned}
+<small><sub><sup>`$$\begin{aligned}
 \binom{n}{2} \frac{1}{m} &= \frac{n(n-1)}{2m} \\
 &= \frac{n-1}{2} \\
-\end{aligned}$$`
+\end{aligned}$$`</sup></sub>
 Sehingga ekspektasi jumlah `$n_j$` tidak akan lebih dari
-`$$\begin{aligned}
+<sub><sup>`$$\begin{aligned}
 E \Bigg[\sum_{j=0}^{m-1}n_j^2\Bigg] &\leq n + 2 \frac{n-1}{2} \\
 &= 2n - 1 \\
 &\lt 2n
-\end{aligned}$$`
+\end{aligned}$$`</sup></sub>
 Ini menunjukkan bahwa ekspektasi jumlah penyimpanan yang dibutuhkan oleh secondary hashing kurang dari 2n.</small>
 
 --
-### Kemungkinan Collision Perfect Hashing
-Lalu bila dilihat menggunaan Pertidaksamaan Markov `$Pr\{X \geq t\} \leq E[X]/t$`, maka dengan `$X = \sum_{j=0}^{m-1}m_j$` dan `$t = 4n$` bisa didapatkan:
+### Penggunaan Penyimpanan Perfect Hashing
+<small>Lalu bila dilihat menggunaan Pertidaksamaan Markov `$Pr\{X \geq t\} \leq E[X]/t$`, maka dengan `$X = \sum_{j=0}^{m-1}m_j$` dan `$t = 4n$` bisa didapatkan:
 
-<small>`$$\begin{aligned}
+`$$\begin{aligned}
 Pr\Bigg\{ \sum_{j=0}^{m-1} m_j \geq 4n \Bigg\}  &\leq \frac{E[\sum_{j=0}^{m-1}m_j]}{4n} \\
 &\lt \frac{2n}{4n} \\
 &= 1/2 \\
-\end{aligned}$$`</small>
+\end{aligned}$$`
+
+Ini menunjukkan bahwa ekspektasi penyimpanan lebih dari `$4n$` adalah kurang dari 0.5, artinya bila kita memilih beberapa hash function dari universal hash function, setidaknya lebih daari setengahnya menggunakan penyimpanan kurang dari `$4n$` </small>
